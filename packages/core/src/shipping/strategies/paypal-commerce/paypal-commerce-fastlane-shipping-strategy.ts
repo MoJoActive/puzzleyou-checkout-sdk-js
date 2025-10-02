@@ -216,7 +216,11 @@ export default class PayPalCommerceFastlaneShippingStrategy implements ShippingS
             );
         }
 
-        if (shippingAddress && cart.lineItems.physicalItems.length > 0) {
+        if (
+            shippingAddress &&
+            (cart.lineItems.physicalItems.length > 0 ||
+                (cart.lineItems.customItems?.length || 0) > 0)
+        ) {
             await this._store.dispatch(
                 this._consignmentActionCreator.updateAddress(shippingAddress),
             );

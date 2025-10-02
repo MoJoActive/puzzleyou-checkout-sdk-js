@@ -161,7 +161,11 @@ export default class BraintreeFastlaneUtils {
                 instruments,
             });
 
-            if (billingAddresses.length > 0 && cart.lineItems.physicalItems.length > 0) {
+            if (
+                billingAddresses.length > 0 &&
+                (cart.lineItems.physicalItems.length > 0 ||
+                    (cart.lineItems.customItems?.length || 0) > 0)
+            ) {
                 await this.paymentIntegrationService.updateBillingAddress(billingAddresses[0]);
             }
 

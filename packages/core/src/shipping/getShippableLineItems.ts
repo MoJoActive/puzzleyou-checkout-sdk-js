@@ -12,7 +12,7 @@ export default function getShippableLineItems(
     consignments: Consignment[],
 ): ShippableItem[] {
     return reduce(
-        (cart && cart.lineItems.physicalItems) || [],
+        (cart && (cart.lineItems.physicalItems || cart.lineItems.customItems)) || [],
         (result, item, i) =>
             !item.addedByPromotion ? result.concat(...splitItem(item, consignments, i)) : result,
         [] as ShippableItem[],

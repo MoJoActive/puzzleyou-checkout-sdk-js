@@ -176,7 +176,11 @@ export default class BigCommercePaymentsFastlaneCustomerStrategy implements Cust
             await this.paymentIntegrationService.updateBillingAddress(billingAddress);
         }
 
-        if (shippingAddress && cart.lineItems.physicalItems.length > 0) {
+        if (
+            shippingAddress &&
+            (cart.lineItems.physicalItems.length > 0 ||
+                (cart.lineItems.customItems?.length || 0) > 0)
+        ) {
             const updatedState = await this.paymentIntegrationService.updateShippingAddress(
                 shippingAddress,
             );

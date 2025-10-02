@@ -194,7 +194,9 @@ export default class ApplePayCustomerStrategy implements CustomerStrategy {
             initializationData: { merchantCapabilities, supportedNetworks },
         } = paymentMethod;
 
-        const requiresShipping = cart.lineItems.physicalItems.length > 0;
+        const requiresShipping =
+            cart.lineItems.physicalItems.length > 0 ||
+            (cart.lineItems.customItems?.length || 0) > 0;
         const total: ApplePayJS.ApplePayLineItem = requiresShipping
             ? {
                   label: storeName,
@@ -481,7 +483,9 @@ export default class ApplePayCustomerStrategy implements CustomerStrategy {
         const { token, billingContact, shippingContact } = event.payment;
         const state = this._paymentIntegrationService.getState();
         const cart = state.getCartOrThrow();
-        const requiresShipping = cart.lineItems.physicalItems.length > 0;
+        const requiresShipping =
+            cart.lineItems.physicalItems.length > 0 ||
+            (cart.lineItems.customItems?.length || 0) > 0;
 
         let deviceSessionId: string | undefined;
 

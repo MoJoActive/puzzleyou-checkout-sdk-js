@@ -244,7 +244,10 @@ export default class BigCommercePaymentsPayLaterButtonStrategy implements Checko
 
             await this.paymentIntegrationService.updateBillingAddress(billingAddress);
 
-            if (cart.lineItems.physicalItems.length > 0) {
+            if (
+                cart.lineItems.physicalItems.length > 0 ||
+                (cart.lineItems.customItems?.length || 0) > 0
+            ) {
                 const shippingAddress =
                     this.bigCommercePaymentsIntegrationService.getShippingAddressFromOrderDetails(
                         orderDetails,
